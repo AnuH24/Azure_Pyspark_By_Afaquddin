@@ -1,0 +1,28 @@
+import pandas as pd
+import csv
+from datetime import datetime
+
+
+def generate_onboarding_document(onboarding_config_file, client_name="client", separator=","):
+    df=pd.read_csv(onboarding_config_file,sep=separator)
+    return df
+
+if __name__ == '__main__':
+
+    onboarding_config_file="E:\onboarding_file.csv"
+    # Loading csv file into data frame
+    data = generate_onboarding_document(onboarding_config_file, separator="|")
+    #print(data)
+    # extracting the coulumn "COLUMN_NAME" and converting to dictionary
+    c=data['COLUMN_NAME'].to_dict().values()
+    #print(c)
+    client_name=input("please enter:")
+    x = datetime.now()
+    file_name = r"Onboarding_test_document"+"_"+client_name+"_" + x.strftime('%m-%d-%Y.csv')
+    # with open(file_name,'') as f:
+    #     w = csv.writer(f)
+    #     #w.writerow(c.keys())
+    #     w.writerow(c.values())
+    with open(file_name, 'a') as f:
+        for i in c:
+            f.write("%s," % (i))
